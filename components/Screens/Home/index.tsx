@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   RefreshControl,
   ScrollView,
@@ -11,6 +11,8 @@ import { ThemedText, ThemedView } from "../../../Theme/ThemedComponents";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../../../Theme/ThemeProvider";
 import { tabStore } from "../../../store/tabStore";
+import tokenStore from "../../../store/tokenStore";
+import TabBar from "../../TabBar";
 
 const Home = () => {
   const navigation = useNavigation<any>();
@@ -18,6 +20,14 @@ const Home = () => {
   const { theme } = useTheme();
 
   const [refreshing, setRefreshing] = useState(false);
+
+  const accessToken = tokenStore((state) => state.accessToken);
+
+  useEffect(() => {
+    if (!accessToken) {
+      navigation.navigate('AuthModal');
+    }
+  }, [accessToken]);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -109,6 +119,7 @@ const Home = () => {
           </View>
         </TouchableOpacity>
       </ScrollView>
+      <TabBar />
     </ThemedView>
   );
 };

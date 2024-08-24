@@ -1,30 +1,36 @@
-import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { ThemedText, ThemedView } from "../../../Theme/ThemedComponents";
 import { userStore } from "../../../store/userStore";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { modalStore } from "../../../store/modalStore";
+import TabBar from "../../TabBar";
+import tokenStore from "../../../store/tokenStore";
+import { useNavigation } from "@react-navigation/native";
 
 const Profile = () => {
 
   const clearUser = userStore(state=>state.clearUser);
   const user = userStore(state=>state.user);
-  const setIsModalVisible = modalStore(state=>state.setIsModalVisible);
+  const clearToken = tokenStore(state=>state.clearTokens);
+
+  const navigation = useNavigation<any>();
   
-  const logOut = async () => {
-    await AsyncStorage.removeItem('ACCESS_TOKEN');
-    await AsyncStorage.removeItem('REFRESH_TOKEN');
+  const logOut = () => {
+    clearToken();
     clearUser();
-    setIsModalVisible(true);
+    navigation.navigate('Home');
   }
 
-  return <ThemedView style={styles.container}>
-    <ThemedText>{user.username}</ThemedText>
-    <ThemedText>프로필</ThemedText>
-    <TouchableOpacity onPress={logOut}>
-      <ThemedText>로그아웃</ThemedText>
-    </TouchableOpacity>
-  </ThemedView>;
+  return (
+    <ThemedView style={styles.container}>
+      <ThemedView style={styles.container}>
+        <ThemedText>{user.username}</ThemedText>
+        <ThemedText>프로필</ThemedText>
+        <TouchableOpacity onPress={logOut}>
+          <ThemedText>로그아웃</ThemedText>
+        </TouchableOpacity>
+      </ThemedView>
+      <TabBar />
+    </ThemedView>
+  );
 };
 
 const styles = StyleSheet.create({

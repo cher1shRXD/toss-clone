@@ -1,6 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
 import TabScreen from './components/Navigation';
-import TabBar from './components/TabBar';
 import { ThemeProvider } from './Theme/ThemeProvider';
 
 const App = () => {
@@ -9,7 +8,6 @@ const App = () => {
     <ThemeProvider>
       <NavigationContainer>
         <TabScreen />
-        <TabBar />
       </NavigationContainer>
     </ThemeProvider>
   );

@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import { ThemedText, ThemedView } from '../../../Theme/ThemedComponents';
 import { useTheme } from '../../../Theme/ThemeProvider';
+import TabBar from '../../TabBar';
 
 const Setting = () => {
 
@@ -9,11 +10,12 @@ const Setting = () => {
 
   return (
     <ThemedView style={styles.container}>
-      <TouchableOpacity
-        onPress={toggleTheme}
-      >
-        <ThemedText>다크모드</ThemedText>
-      </TouchableOpacity>
+      <ThemedView style={styles.container}>
+        <TouchableOpacity onPress={toggleTheme}>
+          <ThemedText>다크모드</ThemedText>
+        </TouchableOpacity>
+      </ThemedView>
+      <TabBar />
     </ThemedView>
   );
 }
