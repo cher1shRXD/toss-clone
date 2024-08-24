@@ -56,12 +56,14 @@ const HomeStackScreen = () => {
           options={{ headerShown: false }}
         />
       </HomeStack.Group>
-      <HomeStack.Group screenOptions={{ 
-        presentation: "modal",
-        gestureEnabled: false,    
-        headerShown: false,      
-        cardStyle: { flex: 1 }  
-      }}>
+      <HomeStack.Group 
+        screenOptions={{ 
+          presentation: "modal",
+          gestureEnabled: false,    
+          headerShown: false,      
+          cardStyle: { flex: 1 },
+        }}
+      >
         <HomeStack.Screen
           name="AuthModal"
           component={AuthStackScreen}
