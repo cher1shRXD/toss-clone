@@ -25,7 +25,9 @@ const Home = () => {
 
   useEffect(() => {
     if (!accessToken) {
-      navigation.navigate('AuthModal');
+      setTimeout(()=>{
+        navigation.navigate("AuthModal");
+      },200);
     }
   }, [accessToken]);
 
@@ -73,6 +75,20 @@ const Home = () => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
+            navigation.navigate("Account");
+          }}
+        >
+          <View
+            style={[
+              styles.item,
+              { backgroundColor: theme.boxColor, height: 120 },
+            ]}
+          >
+            <ThemedText style={styles.itemTitle}>스톡머니</ThemedText>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
             setTab("errand");
             navigation.navigate("SettingScreen");
           }}
@@ -102,20 +118,6 @@ const Home = () => {
             ]}
           >
             <ThemedText style={styles.itemTitle}>증권시장</ThemedText>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Account");
-          }}
-        >
-          <View
-            style={[
-              styles.item,
-              { backgroundColor: theme.boxColor, height: 120 },
-            ]}
-          >
-            <ThemedText style={styles.itemTitle}>스톡머니</ThemedText>
           </View>
         </TouchableOpacity>
       </ScrollView>

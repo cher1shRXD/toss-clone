@@ -8,6 +8,7 @@ import Account from "../Stacks/Account";
 import MyStock from "../Stacks/MyStock";
 import ModalIndex from "../Modal/Main";
 import Login from "../Modal/Login";
+import Signup from "../Modal/Signup";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -24,6 +25,11 @@ const AuthStackScreen = () => {
       <AuthStack.Screen
         name="Login"
         component={Login}
+        options={{ headerShown: false }}
+      />
+      <AuthStack.Screen
+        name="Signup"
+        component={Signup}
         options={{ headerShown: false }}
       />
     </AuthStack.Navigator>

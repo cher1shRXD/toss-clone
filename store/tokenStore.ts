@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware";
 interface TokenStore {
   accessToken: string | null;
   refreshToken: string | null;
-  setAcessToken: (accessToken: string) => void;
+  setAccessToken: (accessToken: string) => void;
   setRefreshToken: (refreshToken: string) => void;
   clearTokens: () => void;
 }
@@ -31,7 +31,7 @@ const tokenStore = create(
     (set) => ({
       accessToken:null,
       refreshToken:null,
-      setAcessToken: (accessToken) => set({accessToken}),
+      setAccessToken: (accessToken) => set({accessToken}),
       setRefreshToken: (refreshToken) => set({refreshToken}),
       clearTokens: () => set({refreshToken:null, accessToken:null})
     }),

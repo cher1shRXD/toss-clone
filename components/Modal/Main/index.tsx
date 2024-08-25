@@ -26,10 +26,15 @@ const ModalIndex = () => {
           />
           <ThemedText style={styles.logoText}>STOCKER</ThemedText>
         </View>
-        <ThemedText style={{fontSize:20}}>김민규의 투자이야기</ThemedText>
+        <ThemedText style={{ fontSize: 20 }}>김민규의 투자이야기</ThemedText>
       </View>
       <View style={styles.buttonWrap}>
-        <TouchableOpacity style={[styles.button, { backgroundColor: "gray" }]}>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: "gray" }]}
+          onPress={() => {
+            navigation.navigate("Signup");
+          }}
+        >
           <Text style={{ color: "white", fontSize: 17 }}>회원가입</Text>
         </TouchableOpacity>
         <TouchableOpacity

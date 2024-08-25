@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
 import {
-  Alert,
   Keyboard,
   Pressable,
   Text,
@@ -8,86 +6,18 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { userStore } from "../../../store/userStore";
 import { ThemedText, ThemedView } from "../../../Theme/ThemedComponents";
 import { useTheme } from "../../../Theme/ThemeProvider";
 import { Ionicons } from "@expo/vector-icons";
 import { styles } from "./style";
-import axios from "axios";
-import tokenStore from "../../../store/tokenStore";
+import useLogin from "../../../hooks/auth/useLogin";
 import { useNavigation } from "@react-navigation/native";
-import { tabStore } from "../../../store/tabStore";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [loginLoading, setLoginLoading] = useState(false);
-
-  const setAccessToken = tokenStore((state) => state.setAcessToken);
-  const accessToken = tokenStore((state) => state.accessToken);
-  const setRefreshToken = tokenStore((state) => state.setRefreshToken);
-
-  const setTab = tabStore(state=>state.setTab);
 
   const { theme } = useTheme();
+  const { ...login } = useLogin(); 
   const navigation = useNavigation<any>();
-
-  const setUser = userStore((state) => state.setUser);
-
-  const handleUsername = (e: string) => {
-    setUsername(e);
-  };
-
-  const handlePassword = (e: string) => {
-    setPassword(e);
-  };
-
-  const submit = async () => {
-    setLoginLoading(true);
-    try {
-      const res = await axios.post("http://dgsw-local.mcv.kr:8080/auth/login", {
-        email: username,
-        password,
-      });
-      if (res) {
-        const accessToken = res.data.accessToken;
-        const refreshToken = res.data.refreshToken;
-        setAccessToken(accessToken);
-        setRefreshToken(refreshToken);
-      }
-    } catch (err) {
-      Alert.alert("로그인 실패", "아이디 또는 비밀번호를 확인해주세요.");
-    }
-    setLoginLoading(false);
-  };
-
-  const getUser = async () => {
-    try {
-      const user = await axios.get("http://dgsw-local.mcv.kr:8080/auth/me", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      if (user) {
-        setUser({
-          id: user.data.id,
-          username: user.data.email,
-        });
-        setUsername("");
-        setPassword("");
-        setTab('HomeScreen');
-        navigation.navigate('Home');
-      }
-    } catch (err) {
-      console.error("Failed to fetch user", err);
-    }
-  };
-
-  useEffect(() => {
-    if (accessToken) {
-      getUser();
-    }
-  }, [accessToken]);
 
   return (
     <ThemedView style={styles.container}>
@@ -131,8 +61,8 @@ const Login = () => {
                 ? { color: "white" }
                 : { color: "#000" },
             ]}
-            onChangeText={handleUsername}
-            value={username}
+            onChangeText={login.handleUsername}
+            value={login.username}
           />
           <ThemedText style={styles.label}>비밀번호</ThemedText>
           <TextInput
@@ -144,18 +74,18 @@ const Login = () => {
             ]}
             secureTextEntry
             textContentType="password"
-            onChangeText={handlePassword}
-            value={password}
+            onChangeText={login.handlePassword}
+            value={login.password}
           />
         </View>
       </Pressable>
       <TouchableOpacity
         style={styles.button}
-        onPress={submit}
-        disabled={loginLoading}
+        onPress={login.submit}
+        disabled={login.loginLoading}
       >
-        <Text style={{ fontSize: 17 }} disabled={loginLoading}>
-          {loginLoading ? "로그인 중..." : "로그인"}
+        <Text style={{ fontSize: 17 }} disabled={login.loginLoading}>
+          {login.loginLoading ? "로그인 중..." : "로그인"}
         </Text>
       </TouchableOpacity>
     </ThemedView>
