@@ -1,5 +1,5 @@
 import { userStore } from "../../store/userStore";
-import instance from "../../libs/axios/apiClient";
+import instance from "../../libs/axios/instance";
 
 const useAuthMe = () => {
 

@@ -1,30 +1,27 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useNavigationState } from '@react-navigation/native';
 import * as S from './style';
 import { Ionicons } from '@expo/vector-icons';
 import { tabStore } from '../../store/tabStore';
 import { useTheme } from '../../Theme/ThemeProvider';
 import { ThemedView } from '../../Theme/ThemedComponents';
 import { StyleSheet } from "react-native";
-import { useEffect } from 'react';
+import { useCallback } from 'react';
 
 const TabBar = () => {
 
   const navigation = useNavigation<any>();
-  const route = useRoute();
+  const route = useNavigationState((state) => state.routes);
 
   const setTab = tabStore(state=>state.setTab);
   const tab = tabStore(state=>state.tab);
 
   const { theme } = useTheme();
 
-  useEffect(() => {
-    if (tab === 'home') {
-      setTab('HomeScreen');
-      navigation.navigate("HomeScreen");
-    } else {
-      setTab(route.name); 
-    }
-  }, [route.name]);
+  useFocusEffect(
+    useCallback(() => {
+      setTab(route[0].name);
+    }, [route])
+  );
 
   const navTo = (screen: string) => {
     navigation.navigate(screen);
